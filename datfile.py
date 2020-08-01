@@ -237,3 +237,115 @@ def loaddb( **kargs ):
     conn.close()
 
     return data
+
+def load_metrics( **kargs ) : 
+    # helper function to read all data via loaddb then convert the returning
+    # metrics into a single flattened numpy array
+    data_list = loaddb( **kargs ) 
+    all_metrics = np.concatenate( [ d["metrics"] for d in data_list ] )
+    return all_metrics
+
+def save_to_sqlite() : 
+    winder_results, uwiii_results = load_all_results()
+    
+#    pklname = "winder_results.pkl" 
+#    with open(pklname,"rb") as f : 
+#        winder_results = pickle.load(f)
+#    print "loaded",pklname
+
+    conn = sqlite3.connect("pageseg.db")
+    conn.text_factory = str
+    cur = conn.cursor()
+
+    cur.execute( "DROP TABLE pageseg" )
+
+    creat = """
+CREATE TABLE IF NOT EXISTS pageseg
+    (filename text,
+     algorithm text,
+     stripsize text,
+     dataset text,
+     imgclass text, 
+     metrics text)
+"""
+    cur.execute( creat )
+
+    store_result_data_to_db( cur, winder_results )
+    store_result_data_to_db( cur, uwiii_results )
+
+    # my UW-III fullpage rast and voronoi are in separate datafiles
+    # I ran them on multiple machines, splitting the jobs by imgclass and by
+    # algorithm.
+    # The datafile contains lines like:
+    # fullpage_vor/A001BIN_vor.png fullpage_vor/A001BIN_vor.xml 0.0
+    file_list = ( "uwiii_fullpage_rast.dat", "uwiii_fullpage_vor.dat" )
+    for filename in [ os.path.join("uwiii_fullpage",f) for f in file_list ] : 
+        # read all lines from the file into an array 
+        with open( filename, "r" ) as infile : 
+            lines = [ l.strip() for l in infile.readlines() ]
+
+        # parse the data into a dict we will put into the DB
+        for l in lines : 
+            # line should look like:
+            # fullpage_vor/A001BIN_vor.png fullpage_vor/A001BIN_vor.xml 0.0
+
+            # split into space separated fields
+            fields = l.split()
+
+            # metric is the last field
+            data = np.array( fields[-1], dtype="float" )
+
+            # get the png filename; we'll use it to split into filename and
+            # algorithm
+            basename = get_basename(fields[0])
+            filename,algorithm = basename.split("_")
+
+            f = dict(db_fields)
+            f["filename"] = filename
+            f["algorithm"] = algorithm
+            f["stripsize"] = "fullpage"
+            f["dataset"] = "uwiii"
+            # first letter of the base e.g., W1U8BIN_vor
+            f["imgclass"] = basename[0] 
+
+            cur.execute( "INSERT INTO pageseg VALUES(?,?,?,?,?,?)",
+                (f["filename"],f["algorithm"],f["stripsize"],
+                 f["dataset"],f["imgclass"],data.tostring()))
+
+    conn.commit()
+    conn.close()
+
+def test_db() : 
+    conn = sqlite3.connect("pageseg.db")
+    conn.text_factory = str
+    cur = conn.cursor()
+
+    # run a quick test to make sure we can get the numpy data back out
+    cur.execute('SELECT * FROM pageseg WHERE dataset="winder" and algorithm="rast" and stripsize="fullpage"')
+#    cur.execute('SELECT * FROM pageseg WHERE dataset="winder" and algorithm="rast" and stripsize="600"')
+#    cur.execute('SELECT * FROM pageseg WHERE dataset="winder" and algorithm="rast" and stripsize="300"')
+    rows = cur.fetchall()
+    for r in rows : 
+        datarow = dict(zip(db_fields_list,r))
+        print datarow["filename"]
+#        print r[5]
+#        data = np.fromstring(r[5],dtype="float")
+        data = np.fromstring(datarow["metrics"],dtype="float")
+        if len(data)==0 : 
+            print "failed?", datarow["filename"]
+        else : 
+            print data.shape,data.mean(),np.min(data),np.max(data)
+
+    conn.close()
+
+    winder = loaddb( dataset="uwiii", stripsize="600", imgclass="C" )
+#    winder = loaddb( dataset="winder", stripsize="fullpage" )
+#    winder = loaddb( dataset="winder", stripsize="300" )
+    for w in winder : 
+#        metrics = np.fromstring(w["metrics"],dtype="float") 
+        print w["imgclass"], np.shape(w["metrics"]), np.mean(w["metrics"])
+
+if __name__=='__main__':
+#    load_all_results()
+#    save_to_sqlite()
+    test_db()
