@@ -32,3 +32,7 @@ def draw_boxes( boxfilename, outdir=None) :
     print box_list
 
     # get the document id from the box file
+#    imgfilename = "IMAGEBIN/{0}BIN.TIF".format( box_list[0].document_id )
+    imgfilename = "IMAGEBIN/{0}BIN.png".format( box_list[0].document_id )
+
+    # write the output image to this file and perhaps to anot
