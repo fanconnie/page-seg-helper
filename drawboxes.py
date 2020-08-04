@@ -20,4 +20,15 @@ def load_image( imgfilename ) :
     # if not RGB, make RGB so we can draw our outlines in color
     if img.mode != "RGB" : 
         img2 = img.convert("RGB")
-        
+        del img
+        img = img2
+
+    return img
+
+def draw_boxes( boxfilename, outdir=None) : 
+
+    box_list = zonebox.load_boxes(boxfilename)
+
+    print box_list
+
+    # get the document id from the box file
