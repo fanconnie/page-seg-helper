@@ -14,4 +14,10 @@ from basename import get_basename
 
 def load_image( imgfilename ) : 
     # load the image
-    img = Imag
+    img = Image.open(imgfilename)
+    img.load()
+
+    # if not RGB, make RGB so we can draw our outlines in color
+    if img.mode != "RGB" : 
+        img2 = img.convert("RGB")
+        
