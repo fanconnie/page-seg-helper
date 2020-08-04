@@ -35,4 +35,8 @@ def draw_boxes( boxfilename, outdir=None) :
 #    imgfilename = "IMAGEBIN/{0}BIN.TIF".format( box_list[0].document_id )
     imgfilename = "IMAGEBIN/{0}BIN.png".format( box_list[0].document_id )
 
-    # write the output image to this file and perhaps to anot
+    # write the output image to this file and perhaps to another directory
+    if not outdir is None : 
+        outfilename = outdir + "/" + get_basename(imgfilename) + "_zoneboxes.png"
+    else :
+        outfilename = get_basename(img
