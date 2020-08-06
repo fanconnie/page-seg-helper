@@ -39,4 +39,14 @@ def draw_boxes( boxfilename, outdir=None) :
     if not outdir is None : 
         outfilename = outdir + "/" + get_basename(imgfilename) + "_zoneboxes.png"
     else :
-        outfilename = get_basename(img
+        outfilename = get_basename(imgfilename) + "_zoneboxes.png"
+
+    img = load_image(imgfilename)
+
+    draw = ImageDraw.Draw(img)
+
+    # draw the zone boxes onto the image
+    for box in box_list : 
+        box.sanity()
+#        print box.document_id
+#
