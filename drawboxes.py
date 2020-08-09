@@ -49,4 +49,8 @@ def draw_boxes( boxfilename, outdir=None) :
     for box in box_list : 
         box.sanity()
 #        print box.document_id
-#
+#        print box.corner_one
+#        print box.corner_two
+
+        upper_left = (box.corner_one["col"],box.corner_one["row"])
+        lower_right = (box.corner_two["col"],box.corner_
