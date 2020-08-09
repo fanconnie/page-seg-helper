@@ -53,4 +53,12 @@ def draw_boxes( boxfilename, outdir=None) :
 #        print box.corner_two
 
         upper_left = (box.corner_one["col"],box.corner_one["row"])
-        lower_right = (box.corner_two["col"],box.corner_
+        lower_right = (box.corner_two["col"],box.corner_two["row"])
+
+        draw.rectangle( (upper_left,lower_right), outline="red" )
+
+    img.save(outfilename)
+    print "wrote",outfilename
+
+#    data = np.asarray(img,dtype="uint8")
+#    
