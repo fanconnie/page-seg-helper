@@ -262,3 +262,217 @@ def draw_class_results_barchart(dataset,dataset_title) :
         pass
 
 #    ax.set( xticks=range(len(imgclass_list)), xticklabels=label_list )
+#    ax.set_xticklabels( imgclass_list )
+
+    leg = ax.legend( rects, ('RAST full','Vor full', 'RAST 300', 'Vor 300'), 
+                    frameon=False )
+    print leg, ax.get_legend()
+
+    canvas = FigureCanvasAgg(fig)
+    canvas.print_figure(outfilename)
+    print "wrote", outfilename
+
+    stretch_width(outfilename)
+#    # load the image we just wrote, resize 50% wider
+#    img = Image.open(outfilename)
+#    img.load()
+#    print img.size
+#    img.resize( (img.size[0]+img.size[0]/2,img.size[1]), Image.BILINEAR ).save(outfilename)
+##    print img.size
+##    img.save(outfilename)
+    print "wrote", outfilename
+
+def draw_winder_class_results() : 
+    outfilename = "winder_class_rast_vs_vor.png"
+    if os.path.exists(outfilename) : 
+        # already exists; don't draw
+        return
+
+    rast_means, rast_names = get_winder_class_results( "winder_fullpage_rast" )
+    vor_means, vor_names = get_winder_class_results( "winder_fullpage_vor" )
+
+    print zip(rast_means, rast_names)
+    print zip(vor_means, vor_names)
+
+    # http://matplotlib.org/examples/api/barchart_demo.html
+    fig = Figure()
+    ax = fig.add_subplot(111)
+#    fig.subplots_adjust( hspace=0.90 )
+
+    ind = np.arange(len(rast_means))
+    width = 0.35
+
+    rects1 = ax.bar( ind, rast_means, width, color='r' )
+    rects2 = ax.bar( ind+width, vor_means, width, color='g' )
+    ax.set_xticklabels( vor_names, rotation='vertical' )
+    ax.legend( (rects1[0],rects2[0]),('RAST','Vor'))
+
+    canvas = FigureCanvasAgg(fig)
+    canvas.print_figure(outfilename)
+    print "wrote", outfilename
+
+def stretch_width( filename ) : 
+    # load the image we just wrote, resize 50% wider, write back to same name
+    img = Image.open(filename)
+    img.load()
+    print img.size
+
+    width = img.size[0]
+    height = img.size[1]
+    print width,height
+
+    width += int(width*2)
+
+    print width,height
+
+    img.resize( (width,height), Image.BILINEAR ).save(filename)
+
+def draw_qualitative() : 
+    print "drawing qualitative"
+    # draw 300, 600, full mean accuracy for both winder and uwiii
+
+    for p in itertools.product(dataset_list,stripsize_list) : 
+        print p
+
+    # populate a hash keyed by dataset_algo, e.g., "winder_rast"
+    # values will be arrays of npdata (300,600,fullpage) of the metrics 
+    qual_data = {}
+    for dataset in dataset_list : 
+        for algo in algorithm_list : 
+            key = "{0}_{1}".format( dataset, algo )
+            qual_data[key] = []
+            for stripsize in stripsize_list : 
+                data_list = datfile.loaddb( dataset=dataset, stripsize=stripsize, algorithm=algo )
+                # join all the metrics together
+                all_metric = np.concatenate( [ d["metrics"] for d in data_list ] )
+                # array, in order 300,600,1200
+                # this is the data we will plot
+                qual_data[key].append( all_metric )
+                # break the reference
+                all_metric = None
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.grid()
+    ax.set_ylim(0,1.0)
+    line_fmt_list = ( '-', '--', '-.', ':' )
+    line_fmt = iter(line_fmt_list)
+    key_list = sorted(qual_data.keys()) 
+    for key in key_list : 
+        # plot the 300,600,fullpage
+        print key
+        metric_means = [np.mean(m) for m in qual_data[key]]
+        metric_errs = [np.std(m) for m in qual_data[key]]
+        print metric_means, metric_errs
+#        ax.errorbar( (0,1,2), metric_means, yerr=metric_errs, fmt="o-" )
+        ax.plot( metric_means, "kx"+line_fmt.next(), linewidth=2.0 )
+
+    # draw legend in upper left
+    ax.legend(key_list,loc=2)
+    ax.set_xticklabels( ("300","","600","","full"))
+    ax.set_xlabel( "Image Size" )
+    ax.set_ylabel( "Match Metric" )
+
+    outfilename = "all_qual.png"
+    canvas = FigureCanvasAgg(fig)
+    canvas.print_figure(outfilename)
+    print "wrote", outfilename
+
+def graph_all_results() : 
+    result_list = [ 
+        { "dir" :   "winder_fullpage_rast",
+          "outfile": "winder_fullpage_rast.png",
+          "title" : "Winder Full Page RAST" },
+        { "dir" :   "winder_fullpage_vor",
+          "outfile": "winder_fullpage_vor.png",
+          "title" : "Winder Full Page Voronoi" },
+
+        { "dir" :   "300_winder_rast",
+          "outfile": "300_winder_rast.png",
+          "title" : "Winder 300 RAST" },
+
+        { "dir" :   "300_winder_rast",
+          "outfile": "300_winder_rast.png",
+          "title" : "Winder 300 RAST" },
+        { "dir" :   "300_winder_vor",
+          "outfile": "300_winder_vor.png",
+          "title" : "Winder 300 Voronoi" },
+
+        { "dir" :   "300_vor",
+          "outfile": "300_uwiii_vor.png",
+          "title" : "UW-III 300 Voronoi" },
+        { "dir" :   "300_rast",
+          "outfile": "300_uwiii_rast.png",
+          "title" : "UW-III 300 RAST" },
+    ]
+
+    # add each image class of Amy Winder's data set
+    for c in winder_imgclass_list : 
+        result_list.append({"dir": os.path.join("winder_fullpage_rast", c),
+                            "outfile" : "winder_"+c+"_rast.png",
+                            "title": "Winder " + c.replace("_"," " ) + " RAST"})
+    for c in winder_imgclass_list : 
+        result_list.append({"dir": os.path.join("winder_fullpage_vor", c),
+                            "outfile" : "winder_"+c+"_vor.png",
+                            "title": "Winder " + c.replace("_"," " ) + " Voronoi"})
+
+    for result in result_list : 
+        print "result=",result
+        if not os.path.exists( result["outfile"] ) :
+            print result["dir"]
+            ndata = load_all_datfiles(result["dir"]) 
+            np.save('metrics.npy',ndata)
+            make_histogram( ndata, result["outfile"], title=result["title"] )
+
+    # UW-III Full Page Histograms
+    uwiii_fullpage_rast = datfile.loaddb( dataset="uwiii", stripsize="fullpage", algorithm="rast" )
+    ndata = np.concatenate( [ d["metrics"] for d in uwiii_fullpage_rast ] )
+    make_histogram( ndata, "uwiii_fullpage_rast.png", title="UW-III Full Page RAST" )
+    nz = np.where( ndata != 0 )
+    make_histogram( ndata[nz], "uwiii_fullpage_rast_nonzero.png", 
+                        title="UW-III Full Page RAST (No Zeros)" )
+
+    # UW-III Full Page with Zeros removed (shows better histogram detail)
+    uwiii_fullpage_vor = datfile.loaddb( dataset="uwiii", stripsize="fullpage", algorithm="vor" )
+    ndata = np.concatenate( [ d["metrics"] for d in uwiii_fullpage_vor ] )
+    make_histogram( ndata, "uwiii_fullpage_vor.png", title="UW-III Full Page Voronoi" )
+    nz = np.where( ndata != 0 )
+    make_histogram( ndata[nz], "uwiii_fullpage_vor_nonzero.png", 
+                        title="UW-III Full Page Voronoi (No Zeros)" )
+
+    uwiii_300_rast = datfile.loaddb( dataset="uwiii", stripsize="300", algorithm="rast" )
+    ndata = np.concatenate( [ d["metrics"] for d in uwiii_300_rast ] )
+    make_histogram( ndata, "uwiii_300_rast.png", title="UW-III 300 RAST" )
+    nz = np.where( ndata != 0 )
+    make_histogram( ndata[nz], "uwiii_300_rast_nonzero.png", 
+                            title="UW-III 300 RAST (No Zeros)" )
+    uwiii_300_vor = datfile.loaddb( dataset="uwiii", stripsize="300", algorithm="vor" )
+    ndata = np.concatenate( [ d["metrics"] for d in uwiii_300_vor ] )
+    make_histogram( ndata, "uwiii_300_vor.png", title="UW-III 300 Voronoi" )
+    nz = np.where( ndata != 0 )
+    make_histogram( ndata[nz], "uwiii_300_vor_nonzero.png", 
+                        title="UW-III 300 Voronoi (No Zeros)" )
+
+    # draw a few single page graphs
+    draw_single_pages()
+
+    # draw a graph of each class of the winder dataset
+    draw_winder_class_results()
+
+    # draw ALL THE RESULTS on one graph
+    draw_qualitative()
+
+    draw_class_results_barchart("uwiii","UW-III")
+    draw_class_results_barchart("winder","Winder")
+
+    draw_four_up_histogram("winder")
+    draw_four_up_histogram("uwiii")
+
+def old_draw_four_up_histogram(dataset) : 
+    # draw a 2x2 plot of 
+    #      fullpage+rast 300+rast
+    #      fullpage+vor  300_vor
+
+    outfilename = "{0}_2x2.png".format(dataset)
+
+    fig = Figure()
