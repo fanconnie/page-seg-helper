@@ -61,4 +61,13 @@ def draw_boxes( boxfilename, outdir=None) :
     print "wrote",outfilename
 
 #    data = np.asarray(img,dtype="uint8")
-#    
+#    print data
+
+def main() : 
+    boxfilename = sys.argv[1]
+
+    draw_boxes( boxfilename)
+
+if __name__ == '__main__' :
+    main()
+
