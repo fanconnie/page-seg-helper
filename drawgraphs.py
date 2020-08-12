@@ -476,3 +476,107 @@ def old_draw_four_up_histogram(dataset) :
     outfilename = "{0}_2x2.png".format(dataset)
 
     fig = Figure()
+    fig.suptitle(dataset)
+
+    figure_label_iter = iter(("(a)","(b)","(c)","(d)"))
+
+    subplot_counter = 1
+    for algo in algorithm_list : 
+        for stripsize in ("fullpage","300") : 
+            metrics = datfile.load_metrics( dataset=dataset, stripsize=stripsize, 
+                                                algorithm=algo)
+
+            ax = fig.add_subplot(2,2,subplot_counter)
+
+            ax.hist(metrics[np.nonzero(np.nan_to_num(metrics))],bins=25)
+#            ax.hist(metrics[np.nonzero(np.nan_to_num(metrics))],bins=25,normed=True)
+
+            ax.set_title("{0} {1} {2}".format(figure_label_iter.next(),algo,stripsize))
+            ax.set_xlabel( "Metric" )
+            ax.set_xlim(0,1.0)
+
+            subplot_counter += 1
+
+    fig.tight_layout(pad=2.0)
+
+    canvas = FigureCanvasAgg(fig)
+    canvas.print_figure(outfilename)
+    print "wrote", outfilename
+
+    stretch_width( outfilename )
+
+def draw_four_up_histogram(dataset) : 
+    # draw a 2x2 plot of 
+    #      fullpage+rast 300+rast
+    #      fullpage+vor  300_vor
+
+    outfilename = "{0}_2x2.png".format(dataset)
+
+    figure_label_iter = iter(("(a)","(b)","(c)","(d)"))
+
+    subplot_counter = 1
+    for algo in algorithm_list : 
+        for stripsize in ("fullpage","300") : 
+            fig = Figure()
+            fig.suptitle(dataset)
+
+            metrics = datfile.load_metrics( dataset=dataset, stripsize=stripsize, 
+                                                algorithm=algo)
+
+            ax = fig.add_subplot(111)
+
+            ax.hist(metrics[np.nonzero(np.nan_to_num(metrics))],bins=25)
+#            ax.hist(metrics[np.nonzero(np.nan_to_num(metrics))],bins=25,normed=True)
+
+#            ax.set_title("{0} {1} {2}".format(figure_label_iter.next(),algo,stripsize))
+            ax.set_xlabel( "Metric" )
+            ax.set_xlim(0,1.0)
+
+            subplot_counter += 1
+
+            fig.tight_layout(pad=2.0)
+
+            outfilename = "{0}_{1}_{2}_histo.png".format(dataset,stripsize,algo)
+            canvas = FigureCanvasAgg(fig)
+            canvas.print_figure(outfilename)
+            print "wrote", outfilename
+
+            stretch_width( outfilename )
+
+def usage() : 
+    print >>sys.stderr, "usage: drawgraphs [list of datfiles]"
+
+def main() : 
+    if len(sys.argv) < 2 : 
+        usage()
+        return
+
+    metrics = None
+
+    for datfile_name in sys.argv[1:] : 
+        print datfile_name
+        ndata = datfile.load( datfile_name ) 
+#        print ndata
+        if metrics is None : 
+            metrics = ndata
+            ndata = None
+        else :
+            metrics = np.append( metrics, ndata )
+        print metrics
+
+    print metrics.shape
+
+    np.save('metrics.npy',metrics)
+    make_histogram( metrics, "out.png" ) 
+
+if __name__=='__main__':
+#    main()
+#   graph_all_results()
+
+#    draw_class_results_barchart("uwiii","UW-III")
+#    draw_class_results_barchart("winder","Winder")
+
+    draw_four_up_histogram("winder")
+    draw_four_up_histogram("uwiii")
+
+#    draw_qualitative()
