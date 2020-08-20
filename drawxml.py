@@ -14,4 +14,12 @@ from basename import get_basename
 
 def load_image( imgfilename ) : 
     img = Image.open(imgfilename)
-    i
+    img.load()
+    if img.mode != "RGB" :
+        img2 = img.convert("RGB")
+        img = img2
+        del img2
+
+    return img
+
+def draw_zones( xmlfilename, imgfilename, outfilename=None )
