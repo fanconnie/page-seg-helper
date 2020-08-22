@@ -32,4 +32,12 @@ def draw_zones( xmlfilename, imgfilename, outfilename=None ) :
 
     for zone in zone_list : 
         if zone.value=="Non-text" :
-            colo
+            color = "red"
+        else :
+            color = "green"
+
+        x1 = zone.rect[0].x
+        y1 = zone.rect[0].y
+        x2 = zone.rect[2].x
+        y2 = zone.rect[2].y
+        draw.rectangle( (
