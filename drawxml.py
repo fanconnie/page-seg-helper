@@ -22,4 +22,14 @@ def load_image( imgfilename ) :
 
     return img
 
-def draw_zones( xmlfilename, imgfilename, outfilename=None )
+def draw_zones( xmlfilename, imgfilename, outfilename=None ) : 
+
+    img = load_image( imgfilename ) 
+
+    draw = ImageDraw.Draw(img)
+
+    zone_list = gtruthxml.parse_xml( xmlfilename ) 
+
+    for zone in zone_list : 
+        if zone.value=="Non-text" :
+            colo
