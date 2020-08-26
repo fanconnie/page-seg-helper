@@ -40,4 +40,13 @@ def draw_zones( xmlfilename, imgfilename, outfilename=None ) :
         y1 = zone.rect[0].y
         x2 = zone.rect[2].x
         y2 = zone.rect[2].y
-        draw.rectangle( (
+        draw.rectangle( ((x1,y1),(x2,y2)), outline=color)
+
+    if outfilename is None : 
+        outfilename = get_basename( imgfilename )+"_zones.png"
+    img.save(outfilename)
+    return outfilename
+
+def main() : 
+    xmlfilename = sys.argv[1]
+    imgfilename = sys.
