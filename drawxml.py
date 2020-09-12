@@ -49,4 +49,11 @@ def draw_zones( xmlfilename, imgfilename, outfilename=None ) :
 
 def main() : 
     xmlfilename = sys.argv[1]
-    imgfilename = sys.
+    imgfilename = sys.argv[2]
+
+    outfilename = draw_zones( xmlfilename, imgfilename ) 
+    print "wrote", outfilename
+
+if __name__=='__main__':
+    main()
+
