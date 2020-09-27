@@ -14,4 +14,10 @@ def load_xml( xmlfilename ) :
     root = tree.getroot()
     return root
 
-# pret
+# pretend to be a UW-III boxfile so I can convert an upper_left/lower_right to
+# a rects.Strip
+class Zone( object ): 
+    corner_one = {"row":0,"col":0}
+    corner_two = {"row":0,"col":0}
+
+    
