@@ -31,4 +31,10 @@ def parse_xml( xmlfilename ) :
 
     root = load_xml( xmlfilename ) 
 
-    rect_li
+    rect_list = []
+
+    for child in root : 
+        for zone in child : 
+            if zone.tag=="Classification" : 
+
+                # send our pretend Box class so we can leverage 
