@@ -43,4 +43,9 @@ def parse_xml( xmlfilename ) :
                 rect_list.append( rect ) 
                 rect = None
 
-   
+            elif zone.tag=="ZoneCorners" : 
+                # upper left
+                x1,y1=zone[0].attrib["x"], zone[0].attrib["y"]
+                x1 = float(x1)
+                y1 = float(y1)
+  
