@@ -37,4 +37,10 @@ def parse_xml( xmlfilename ) :
         for zone in child : 
             if zone.tag=="Classification" : 
 
-                # send our pretend Box class so we can leverage 
+                # send our pretend Box class so we can leverage the rects.Strip
+                rect = rects.Strip( box=Zone((x1,y1),(x2,y2)) )
+                rect.set_value( zone[0].attrib["Value"] )
+                rect_list.append( rect ) 
+                rect = None
+
+   
