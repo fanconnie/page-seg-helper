@@ -23,4 +23,12 @@ class Zone( object ):
     def __init__( self, upper_left, lower_right ) : 
         # incoming fields are x,y order 
         self.corner_one["row"] = upper_left[1]
-        self.corner_one["col"] = upper_
+        self.corner_one["col"] = upper_left[0]
+        self.corner_two["row"] = lower_right[1]
+        self.corner_two["col"] = lower_right[0]
+
+def parse_xml( xmlfilename ) : 
+
+    root = load_xml( xmlfilename ) 
+
+    rect_li
