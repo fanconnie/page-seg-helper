@@ -53,4 +53,13 @@ def parse_xml( xmlfilename ) :
                 x2 = float(x2)
                 y2 = float(y2)
 
-    retu
+    return rect_list
+
+def main() : 
+    for xmlfilename in sys.argv[1:]:
+        rect_list = parse_xml( xmlfilename )
+        print rect_list
+
+if __name__=='__main__':
+    main()
+
