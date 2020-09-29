@@ -48,4 +48,9 @@ def parse_xml( xmlfilename ) :
                 x1,y1=zone[0].attrib["x"], zone[0].attrib["y"]
                 x1 = float(x1)
                 y1 = float(y1)
-  
+                # lower right
+                x2,y2=zone[-2].attrib["x"], zone[-2].attrib["y"]
+                x2 = float(x2)
+                y2 = float(y2)
+
+    retu
