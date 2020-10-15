@@ -27,4 +27,13 @@ def make_slices( data, num_rows_in_slice ) :
         s = None
 
         start_idx += num_rows_in_slice
-        end_idx = min( 
+        end_idx = min( total_num_rows, end_idx+num_rows_in_slice )
+
+    return slice_list
+
+def load_image( imgfilename ) : 
+    img = Image.open(imgfilename)
+    img.load()
+    
+    if img.mode == "RGB" : 
+  
