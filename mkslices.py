@@ -17,4 +17,8 @@ def make_slices( data, num_rows_in_slice ) :
     start_idx = 0
     end_idx = start_idx + num_rows_in_slice
 
- 
+    print "make_slices shape=",data.shape
+    slice_list = []
+    total_num_rows = data.shape[0] 
+    while start_idx < total_num_rows : 
+        s = data[start_idx:end_idx,:]
