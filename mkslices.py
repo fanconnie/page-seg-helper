@@ -22,3 +22,9 @@ def make_slices( data, num_rows_in_slice ) :
     total_num_rows = data.shape[0] 
     while start_idx < total_num_rows : 
         s = data[start_idx:end_idx,:]
+        print "start={0} end={1} s={2}".format( start_idx, end_idx, s.shape )
+        slice_list.append( s ) 
+        s = None
+
+        start_idx += num_rows_in_slice
+        end_idx = min( 
