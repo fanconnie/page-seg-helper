@@ -10,4 +10,11 @@ import Image
 
 from basename import get_basename
 
-def make_slices( da
+def make_slices( data, num_rows_in_slice ) :
+    # carve up the numpy array into N strips of num_rows each; return an array
+    # of said strips
+
+    start_idx = 0
+    end_idx = start_idx + num_rows_in_slice
+
+ 
