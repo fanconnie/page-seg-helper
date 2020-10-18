@@ -57,4 +57,8 @@ def make_image_slices( imgfilename, num_rows=300 ) :
 
     imgslices = make_slices( data, num_rows )
 
-    
+    outfilename_list = []
+    outfilename_fmt = "{0}_s{1}.png"
+    for idx,n in enumerate(imgslices) : 
+        print n.shape
+        outfilename = outfilename_fmt.format( basename
