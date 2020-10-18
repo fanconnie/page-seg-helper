@@ -40,4 +40,12 @@ def load_image( imgfilename ) :
         raise Exception( errmsg )
 
     # single bit image? So much I don't know. I don know unless I convert to an
-    # 8bpp
+    # 8bpp gray, the numpy conversion gets... weird.
+    if img.mode == "1" :
+        img2 = img.convert("L")
+        img = img2
+        del img2
+
+    basename = get_basename( imgfilename )
+
+  
