@@ -48,4 +48,13 @@ def load_image( imgfilename ) :
 
     basename = get_basename( imgfilename )
 
-  
+    data = np.asarray(img,dtype="uint8")
+    print "shape=",data.shape
+
+    return data
+
+def make_image_slices( imgfilename, num_rows=300 ) :
+
+    imgslices = make_slices( data, num_rows )
+
+    
