@@ -36,4 +36,8 @@ def load_image( imgfilename ) :
     img.load()
     
     if img.mode == "RGB" : 
-  
+        errmsg="mode={0}; cowardly refusing a non-gray image".format( img.mode )
+        raise Exception( errmsg )
+
+    # single bit image? So much I don't know. I don know unless I convert to an
+    # 8bpp
