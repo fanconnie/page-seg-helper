@@ -61,4 +61,11 @@ def make_image_slices( imgfilename, num_rows=300 ) :
     outfilename_fmt = "{0}_s{1}.png"
     for idx,n in enumerate(imgslices) : 
         print n.shape
-        outfilename = outfilename_fmt.format( basename
+        outfilename = outfilename_fmt.format( basename, idx )
+
+        outimg = Image.fromarray( n, "L" )
+        outimg.save( outfilename )
+        print "wrote", outfilename 
+        outfilename_list.append( outfilename )
+
+    return outfilename_list
