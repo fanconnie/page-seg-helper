@@ -69,3 +69,11 @@ def make_image_slices( imgfilename, num_rows=300 ) :
         outfilename_list.append( outfilename )
 
     return outfilename_list
+
+def main() : 
+    for imgfilename in sys.argv[1:] :
+        make_image_slices( imgfilename )
+
+if __name__=='__main__': 
+    main()
+
