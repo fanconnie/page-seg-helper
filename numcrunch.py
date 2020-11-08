@@ -24,4 +24,11 @@ def print_latex_table( outfilename, output_list ) :
 
     for s in output_list : 
 #        print >>outfile, data.format( file["name"], file["size"], file["new_size"])
-#        prin
+#        print >>outfile, data.format( s["name"], s["count"], s["zeros"], s["percent"] )
+        print s["name"]
+        print >>outfile, data.format(**s)
+    
+    print >>outfile, postfix
+
+
+def count_
