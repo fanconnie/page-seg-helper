@@ -19,4 +19,9 @@ def print_latex_table( outfilename, output_list ) :
     postfix = """
     \\end{tabular}"""
 
-    outfile = open(outf
+    outfile = open(outfilename,"w")
+    print >>outfile, prefix,
+
+    for s in output_list : 
+#        print >>outfile, data.format( file["name"], file["size"], file["new_size"])
+#        prin
