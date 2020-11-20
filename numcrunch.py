@@ -31,4 +31,10 @@ def print_latex_table( outfilename, output_list ) :
     print >>outfile, postfix
 
 
-def count_
+def count_zeros(dataset,algorithm,stripsize) : 
+
+    metrics = datfile.load_metrics(dataset=dataset,algorithm=algorithm,stripsize=stripsize )
+
+#    zeros = np.where(metrics==0)
+
+    num_nonzero = np.count_nonzero(
