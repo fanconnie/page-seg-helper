@@ -45,4 +45,10 @@ def count_zeros(dataset,algorithm,stripsize) :
 #    print "num_nonzero=",num_nonzero
 #    print "num_elements=",len(metrics)
 
-    return (num_nonzero, num_elements, float(num_nonzero)/float(
+    return (num_nonzero, num_elements, float(num_nonzero)/float(num_elements) )
+
+def calculate_all_zeros() : 
+#    count_zeros("uwiii","rast","fullpage")
+        
+    table = []
+    itr = itertools.product(datfile.dataset_list,datfile.algorithm_
