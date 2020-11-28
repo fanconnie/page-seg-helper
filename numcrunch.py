@@ -51,4 +51,9 @@ def calculate_all_zeros() :
 #    count_zeros("uwiii","rast","fullpage")
         
     table = []
-    itr = itertools.product(datfile.dataset_list,datfile.algorithm_
+    itr = itertools.product(datfile.dataset_list,datfile.algorithm_list,datfile.stripsize_list)
+    for i in itr : 
+        name = " ".join(i)
+        zero_info  = count_zeros(i[0],i[1],i[2])
+        table.append( { "name":name,
+                     
