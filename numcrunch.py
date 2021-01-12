@@ -56,4 +56,10 @@ def calculate_all_zeros() :
         name = " ".join(i)
         zero_info  = count_zeros(i[0],i[1],i[2])
         table.append( { "name":name,
-                     
+                        "count": zero_info[1]+zero_info[0],
+                        "zeros": zero_info[1]-zero_info[0],
+                        "percent": zero_info[2]} )
+
+    print_latex_table( "zeros_table.tex", table )
+
+d
