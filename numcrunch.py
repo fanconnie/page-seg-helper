@@ -62,4 +62,8 @@ def calculate_all_zeros() :
 
     print_latex_table( "zeros_table.tex", table )
 
-d
+def calculate_total_performance(algo) : 
+
+    winder_metrics = datfile.load_metrics( dataset="winder", stripsize="300", 
+                                    algorithm=algo )
+    uwiii_metr
