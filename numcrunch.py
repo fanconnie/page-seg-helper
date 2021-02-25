@@ -66,4 +66,10 @@ def calculate_total_performance(algo) :
 
     winder_metrics = datfile.load_metrics( dataset="winder", stripsize="300", 
                                     algorithm=algo )
-    uwiii_metr
+    uwiii_metrics = datfile.load_metrics( dataset="uwiii", stripsize="300",
+                                    algorithm=algo )
+
+    print winder_metrics.shape
+    print uwiii_metrics.shape
+
+    
