@@ -72,4 +72,8 @@ def calculate_total_performance(algo) :
     print winder_metrics.shape
     print uwiii_metrics.shape
 
-    
+    all_300 = np.concatenate((winder_metrics, uwiii_metrics))
+
+    print "all {0} len={1}".format( algo, len(all_300) )
+    print "all {0} mean={1}".format( algo,  np.mean(all_300) )
+    print "all {0} stddev={1}".f
