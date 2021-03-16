@@ -76,4 +76,10 @@ def calculate_total_performance(algo) :
 
     print "all {0} len={1}".format( algo, len(all_300) )
     print "all {0} mean={1}".format( algo,  np.mean(all_300) )
-    print "all {0} stddev={1}".f
+    print "all {0} stddev={1}".format( algo,  np.std(all_300) )
+
+    nz = np.nonzero(all_300)
+    print len(all_300[nz])
+    print "all {0} numzeros={1}".format( algo,  len(all_300)-len(all_300[nz]))
+
+def count_uwiii
