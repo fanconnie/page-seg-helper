@@ -87,4 +87,11 @@ def count_uwiii_zeros() :
                                           algorithm="rast")
     
     num_nonzero = np.count_nonzero(metrics)
-    num_element
+    num_elements = len(metrics)
+
+    print num_elements, num_nonzero
+    print "num_nonzero=",num_nonzero
+    print "num_elements=",num_elements
+    print "num_zero=",num_elements-num_nonzero
+
+de
