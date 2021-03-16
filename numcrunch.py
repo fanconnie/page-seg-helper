@@ -82,4 +82,9 @@ def calculate_total_performance(algo) :
     print len(all_300[nz])
     print "all {0} numzeros={1}".format( algo,  len(all_300)-len(all_300[nz]))
 
-def count_uwiii
+def count_uwiii_zeros() : 
+    metrics = datfile.load_metrics( dataset="uwiii", stripsize="300",
+                                          algorithm="rast")
+    
+    num_nonzero = np.count_nonzero(metrics)
+    num_element
