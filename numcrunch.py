@@ -94,4 +94,11 @@ def count_uwiii_zeros() :
     print "num_elements=",num_elements
     print "num_zero=",num_elements-num_nonzero
 
-de
+def main() : 
+#    calculate_all_zeros()
+
+    count_uwiii_zeros()
+
+#    calculate_total_performance("rast") 
+#    calculate_total_performance("vor") 
+#    calculate_total_performance("ful
