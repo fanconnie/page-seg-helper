@@ -101,4 +101,8 @@ def main() :
 
 #    calculate_total_performance("rast") 
 #    calculate_total_performance("vor") 
-#    calculate_total_performance("ful
+#    calculate_total_performance("fullpage") 
+
+if __name__=='__main__':
+    main()
+
