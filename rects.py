@@ -15,4 +15,9 @@ class Point(object):
         self.x = 0
         self.y = 0
 
-    def __re
+    def __repr__(self) : 
+        return "({0},{1})".format(self.x,self.y)
+
+class Strip( object ) :
+    def __init__( self, **kwargs ) : 
+        # self.value will be "Text", "Non-text", ... (more later)
