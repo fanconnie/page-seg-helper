@@ -26,4 +26,9 @@ class Strip( object ) :
         self.rect = [ Point(), Point(), Point(), Point() ]
 
         if "width" in kwargs and "height" in kwargs :
-            # create a strip from a simple 
+            # create a strip from a simple width/height
+            width = kwargs["width"]
+            height = kwargs["height"]
+            self.rect[0].x = 0
+            self.rect[0].y = 0
+            self.rect[1].x =
