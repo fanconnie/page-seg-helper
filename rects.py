@@ -21,3 +21,9 @@ class Point(object):
 class Strip( object ) :
     def __init__( self, **kwargs ) : 
         # self.value will be "Text", "Non-text", ... (more later)
+        self.value = None
+
+        self.rect = [ Point(), Point(), Point(), Point() ]
+
+        if "width" in kwargs and "height" in kwargs :
+            # create a strip from a simple 
