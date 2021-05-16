@@ -31,4 +31,9 @@ class Strip( object ) :
             height = kwargs["height"]
             self.rect[0].x = 0
             self.rect[0].y = 0
-            self.rect[1].x =
+            self.rect[1].x = width
+            self.rect[1].y = 0
+            self.rect[2].x = width
+            self.rect[2].y = height
+            self.rect[3].x = 0
+            self.rect[3].y = hei
