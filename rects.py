@@ -36,4 +36,12 @@ class Strip( object ) :
             self.rect[2].x = width
             self.rect[2].y = height
             self.rect[3].x = 0
-            self.rect[3].y = hei
+            self.rect[3].y = height
+
+            self.width = width
+            self.height = height
+        elif "box" in kwargs : 
+            # create a strip from a UW-III ZoneBox class
+            box = kwargs["box"]
+
+            self.r
