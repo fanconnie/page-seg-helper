@@ -53,4 +53,8 @@ class Strip( object ) :
             self.rect[2].x = box.corner_two["col"]
             self.rect[2].y = box.corner_two["row"]
 
-            self.rect[3].x = box
+            self.rect[3].x = box.corner_one["col"]  # same as [0]
+            self.rect[3].y = box.corner_two["row"]  # same as [2]
+
+            self.width = self.rect[1].x - self.rect[0].x
+            self.height = self
