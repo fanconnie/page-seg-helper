@@ -44,4 +44,13 @@ class Strip( object ) :
             # create a strip from a UW-III ZoneBox class
             box = kwargs["box"]
 
-            self.r
+            self.rect[0].x = box.corner_one["col"]
+            self.rect[0].y = box.corner_one["row"]
+
+            self.rect[1].x = box.corner_two["col"] # same as [2]
+            self.rect[1].y = box.corner_one["row"] # same as [0]
+
+            self.rect[2].x = box.corner_two["col"]
+            self.rect[2].y = box.corner_two["row"]
+
+            self.rect[3].x = box
