@@ -57,4 +57,10 @@ class Strip( object ) :
             self.rect[3].y = box.corner_two["row"]  # same as [2]
 
             self.width = self.rect[1].x - self.rect[0].x
-            self.height = self
+            self.height = self.rect[2].y - self.rect[1].y
+
+#        else : 
+#            # TODO make this smarter (defaults?)
+#            raise Exception( "need width/height or box parameters" )
+
+  
