@@ -63,4 +63,8 @@ class Strip( object ) :
 #            # TODO make this smarter (defaults?)
 #            raise Exception( "need width/height or box parameters" )
 
-  
+        # add enough duck so zone2xml can quack me 
+        # http://en.wikipedia.org/wiki/Duck_typing
+        # upper left 
+        self._corner_one = { "row": self.rect[0].y, "col": self.rect[0].x } 
+        # lower r
