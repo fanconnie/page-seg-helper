@@ -67,4 +67,9 @@ class Strip( object ) :
         # http://en.wikipedia.org/wiki/Duck_typing
         # upper left 
         self._corner_one = { "row": self.rect[0].y, "col": self.rect[0].x } 
-        # lower r
+        # lower right
+        self._corner_two = { "row": self.rect[2].y, "col": self.rect[2].x } 
+
+    def set_value( self, value ) : 
+        # set the strip contents type
+        if value not in ("Text"
