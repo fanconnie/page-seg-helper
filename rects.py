@@ -72,4 +72,10 @@ class Strip( object ) :
 
     def set_value( self, value ) : 
         # set the strip contents type
-        if value not in ("Text"
+        if value not in ("Text","Non-text") : 
+            raise Exception( "Unknown strip content type {0}".format( value ) )
+        self.value = value
+
+    def next_strip( self ) : 
+        # increment to the next strip
+ 
