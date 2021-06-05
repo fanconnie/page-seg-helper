@@ -84,4 +84,9 @@ class Strip( object ) :
         self.rect[3].y += self.height
 
     def __repr__( self ) : 
-        ret
+        return str(self.rect)
+
+    def __getattr__( self, name ) : 
+        if name=="corner_one" : 
+            self._corner_one = { "row": self.rect[0].y, "col": self.rect[0].x } 
+            return self._
