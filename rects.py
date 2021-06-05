@@ -78,4 +78,10 @@ class Strip( object ) :
 
     def next_strip( self ) : 
         # increment to the next strip
- 
+        self.rect[0].y += self.height
+        self.rect[1].y += self.height
+        self.rect[2].y += self.height
+        self.rect[3].y += self.height
+
+    def __repr__( self ) : 
+        ret
