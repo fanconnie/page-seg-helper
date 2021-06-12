@@ -94,4 +94,12 @@ class Strip( object ) :
             self._corner_two = { "row": self.rect[2].y, "col": self.rect[2].x } 
             return self._corner_two
         else :
-            r
+            raise AttributeError
+
+
+def strip_intersect( gtruth, strip ) : 
+    intersect = Strip()
+
+    # clockwise from upper left 0 -> 1 
+    #                           |    |
+    #                 
