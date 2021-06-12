@@ -102,4 +102,10 @@ def strip_intersect( gtruth, strip ) :
 
     # clockwise from upper left 0 -> 1 
     #                           |    |
-    #                 
+    #                           3 <- 2
+
+    # null set? (no intersection)
+    # if gtruth lower right is above strip
+    #    or gruth upper left is below strip
+    if gtruth.rect[2].y < strip.rect[0].y \
+       or gtruth.re
