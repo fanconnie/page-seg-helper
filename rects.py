@@ -114,4 +114,11 @@ def strip_intersect( gtruth, strip ) :
 
     # upper left
     intersect.rect[0].x = max(gtruth.rect[0].x,strip.rect[0].x)
-    intersect.rect[0].y = max(gtruth.rect[0].y,stri
+    intersect.rect[0].y = max(gtruth.rect[0].y,strip.rect[0].y)
+
+    # upper right
+    intersect.rect[1].x = min(gtruth.rect[1].x,strip.rect[1].x)
+    intersect.rect[1].y = max(gtruth.rect[1].y,strip.rect[1].y)
+
+    # lower right
+    intersect
