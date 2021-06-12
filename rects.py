@@ -108,4 +108,10 @@ def strip_intersect( gtruth, strip ) :
     # if gtruth lower right is above strip
     #    or gruth upper left is below strip
     if gtruth.rect[2].y < strip.rect[0].y \
-       or gtruth.re
+       or gtruth.rect[0].y > strip.rect[2].y :
+       return None
+
+
+    # upper left
+    intersect.rect[0].x = max(gtruth.rect[0].x,strip.rect[0].x)
+    intersect.rect[0].y = max(gtruth.rect[0].y,stri
