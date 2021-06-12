@@ -89,4 +89,9 @@ class Strip( object ) :
     def __getattr__( self, name ) : 
         if name=="corner_one" : 
             self._corner_one = { "row": self.rect[0].y, "col": self.rect[0].x } 
-            return self._
+            return self._corner_one
+        elif name=="corner_two" : 
+            self._corner_two = { "row": self.rect[2].y, "col": self.rect[2].x } 
+            return self._corner_two
+        else :
+            r
