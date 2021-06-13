@@ -126,4 +126,10 @@ def strip_intersect( gtruth, strip ) :
 
     # lower left
     intersect.rect[3].x = max(gtruth.rect[3].x,strip.rect[3].x)
-    in
+    intersect.rect[3].y = min(gtruth.rect[3].y,strip.rect[3].y)
+
+    return intersect
+
+def box_list_bounding_box( box_list ) :
+    # find a bounding box that encompasses all boxes in the box_list
+   
