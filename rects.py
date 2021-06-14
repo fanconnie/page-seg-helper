@@ -132,4 +132,12 @@ def strip_intersect( gtruth, strip ) :
 
 def box_list_bounding_box( box_list ) :
     # find a bounding box that encompasses all boxes in the box_list
-   
+    
+    min_row = sys.maxint
+    min_col = sys.maxint
+    max_row = 0
+    max_col = 0
+
+    for box in box_list :
+        if box.corner_one["row"] < min_row :
+            min_row = box.corner
