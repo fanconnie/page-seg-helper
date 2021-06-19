@@ -145,4 +145,9 @@ def box_list_bounding_box( box_list ) :
             min_col = box.corner_one["col"]
 
         if box.corner_two["row"] > max_row :
-            max_row = box.corner_two["r
+            max_row = box.corner_two["row"]
+        if box.corner_two["col"] > max_col :
+            max_col = box.corner_two["col"]
+
+    return {"upper_left": {"row":min_row,"col":min_col},
+            "lower_right":{
