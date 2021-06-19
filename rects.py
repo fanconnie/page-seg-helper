@@ -156,4 +156,11 @@ def slice_boxes( boxfilename) :
     # iterate through a box list, making strip slices.
     
     box_list = zonebox.load_boxes(boxfilename)
-#    for box in box_lis
+#    for box in box_list :
+#        print box
+#        s = Strip(box=box)
+#        print s
+
+    # find the largest Y index in our boxes (the maximum row)
+    bounding_box = box_list_bounding_box( box_list )
+    
