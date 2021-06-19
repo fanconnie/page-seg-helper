@@ -150,4 +150,10 @@ def box_list_bounding_box( box_list ) :
             max_col = box.corner_two["col"]
 
     return {"upper_left": {"row":min_row,"col":min_col},
-            "lower_right":{
+            "lower_right":{"row":max_row,"col":max_col} }
+
+def slice_boxes( boxfilename) : 
+    # iterate through a box list, making strip slices.
+    
+    box_list = zonebox.load_boxes(boxfilename)
+#    for box in box_lis
