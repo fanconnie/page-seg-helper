@@ -163,4 +163,10 @@ def slice_boxes( boxfilename) :
 
     # find the largest Y index in our boxes (the maximum row)
     bounding_box = box_list_bounding_box( box_list )
-    
+    print "bounding_box=",bounding_box
+
+    # use lower left row count as the number of rows we will iterate
+    num_rows = bounding_box["lower_right"]["row"]
+    print "num_rows=",num_rows
+
+    # make a starting strip
