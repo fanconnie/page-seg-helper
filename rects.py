@@ -170,3 +170,10 @@ def slice_boxes( boxfilename) :
     print "num_rows=",num_rows
 
     # make a starting strip
+    num_rows_in_strip = 300
+    s = Strip(width=2560,height=num_rows_in_strip)
+
+    row = 0
+    while row < num_rows : 
+        print "strip=",s
+     
