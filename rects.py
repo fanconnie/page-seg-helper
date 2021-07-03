@@ -176,4 +176,10 @@ def slice_boxes( boxfilename) :
     row = 0
     while row < num_rows : 
         print "strip=",s
-     
+        for box in box_list : 
+            print "box=",box
+            isect = strip_intersect( Strip(box=box), s )
+            if isect : 
+                print "intersect=",isect
+            else :
+      
