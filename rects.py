@@ -182,4 +182,14 @@ def slice_boxes( boxfilename) :
             if isect : 
                 print "intersect=",isect
             else :
-      
+                print "no intersections"
+
+        s.next_strip()
+        row += num_rows_in_strip
+
+def main() : 
+    boxfilename = sys.argv[1]
+
+    slice_boxes( boxfilename)
+
+if __name__ == '__
