@@ -160,3 +160,20 @@ def save_results( data ) :
     outfile.close()
 
 #    with open(output_filename,"w") as outfile : 
+#        for d in data : 
+#            # print the metric
+#            print >>outfile, "{0}".format( d[1] )
+
+def main() : 
+
+#    for imgfilename in sys.argv[1:] : 
+#        run( imgfilename ) 
+
+    data = [ run(f) for f in sys.argv[1:] ]
+    print data
+
+    save_results( data ) 
+
+if __name__=='__main__' :
+    main()
+
