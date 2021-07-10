@@ -159,3 +159,187 @@ def run_all_uwiii( ) :
         output = open( "uwiii.pkl", "wb" )
         pickle.dump(result_list,output)
         output.close()
+
+        xmlfilename = result["output_xml_file"]
+
+        # did we crash? if so don't bother trying to draw the XML
+        if xmlfilename == "failed" : 
+            print "{0} failed!".format( imgfilename )
+            continue
+        
+        # draw the resulting XML onto the original input image
+        out_imgfilename = output_dir + "{0}_zones.png".format(document_id)
+
+        if os.path.exists( out_imgfilename ) : 
+            print "{0} already exists; not redrawing".format( out_imgfilename ) 
+            continue
+
+        drawxml.draw_zones( xmlfilename, imgfilename, out_imgfilename )
+        print "wrote", out_imgfilename
+
+    outfile = open("uwiii.dat","w")
+    for result in result_list : 
+        print >>outfile, "{0} {1} {2}".format(
+            result["output_image_file"],
+            result["output_xml_file"],
+            result["metric"] )
+    outfile.close()
+
+def run_file_list( img_filelist, xml_filelist, output_dir, output_basename ) :
+
+    result_list = []
+
+    pickle_filename = os.path.join( output_dir, output_basename + ".pkl" )
+    dat_filename = os.path.join( output_dir, output_basename + ".dat" )
+
+    for imgfilename,gtruth_xml_filename in zip(img_filelist, xml_filelist) :
+        basename = get_basename(imgfilename)
+        document_id = get_document_id_from_basename( basename )
+
+        result = run_image_with_gtruth( imgfilename, gtruth_xml_filename, output_dir )
+        result_list.append( result ) 
+
+        # save pickled file so can do interesting things with the results later
+        # (especially if we crash)
+
+        output = open( pickle_filename, "wb" )
+        pickle.dump(result_list,output)
+        output.close()
+
+        xmlfilename = result["output_xml_file"]
+
+        # did we crash? if so don't bother trying to draw the XML
+        if xmlfilename == "failed" : 
+            print "{0} failed!".format( imgfilename )
+            continue
+        
+        # draw the resulting XML onto the original input image
+        out_imgfilename = os.path.join(output_dir, "{0}_zones.png".format(basename) )
+
+        if os.path.exists( out_imgfilename ) : 
+            print "{0} already exists; not redrawing".format( out_imgfilename ) 
+            continue
+
+        drawxml.draw_zones( xmlfilename, imgfilename, out_imgfilename )
+        print "wrote", out_imgfilename
+
+    outfile = open(dat_filename,"w")
+    for result in result_list : 
+        print >>outfile, "{0} {1} {2}".format(
+            result["output_image_file"],
+            result["output_xml_file"],
+            result["metric"] )
+    outfile.close()
+
+def sanity_check_images( document_id ) : 
+    img_file_list,xml_file_list = get_file_lists( document_id )
+
+    for imgfilename,xmlfilename in zip(img_file_list,xml_file_list) : 
+        basename = get_basename(imgfilename)
+        document_id = get_document_id_from_basename( basename )
+
+        print imgfilename, xmlfilename, document_id
+
+        img = Image.open(imgfilename)
+        img.load()
+        xmlfile = open(xmlfilename,"r")
+        xmlfile.close()
+        del img
+
+def get_file_lists( document_id ) : 
+    # load all input images and their XML ground truth
+    input_dir = str(num_rows) + "/" + document_id + "/"
+
+    img_file_list = glob.glob( input_dir + "/*.png" ) 
+
+    xml_file_list = [ s.replace(".png",".xml") for s in img_file_list ]
+
+    return img_file_list, xml_file_list
+
+def run_image( document_id ) : 
+
+#    # sanity check before we begin the day's festivities
+#    sanity_check_images( document_id )
+    
+    img_file_list,xml_file_list = get_file_lists( document_id )
+
+    s = "{0}_{1}".format( num_rows, segmentation_algorithm  )
+    output_dir = os.path.join( s, document_id )
+
+    if not os.path.exists(output_dir) :
+        os.mkdir(output_dir)
+
+    run_file_list( img_file_list, xml_file_list, output_dir, document_id )
+
+def run_dir( dirname ) : 
+    img_dir_list = glob.glob(dirname) 
+    print img_dir_list
+
+    count = 0
+    for dirname in img_dir_list : 
+        count += 1
+        # get the document id
+        document_id = dirname.split("/")[-1]
+        run_image( document_id )
+
+        print "{0} of {1}".format( count, len(img_dir_list) )
+
+def parse_args() :
+    helptext = "Specify either docid OR image+gtruth"
+
+    parser = argparse.ArgumentParser( description="Run page segmentation" )
+
+    parser.add_argument( "--seg", help="segmentation algorithm to run (default==rast)",
+                         default="rast", choices=("rast","voronoi",) )
+    parser.add_argument( "--docid", help="document ID to segment" )
+    parser.add_argument( "--image", help="source image to segment" )
+    parser.add_argument( "--gtruth", help="ground truth XML" )
+
+    args = vars( parser.parse_args() )
+
+    print args
+
+    # sanity check some mutual exclusion arguments
+    if args["docid"] : 
+        if args["image"] or args["gtruth"] : 
+            err = "Error: must specify either docid OR image+gtruth\n"
+            parser.exit(-1,err)
+    else : 
+        if not ( args["image"] and args["gtruth"] ) : 
+            err = "Error: must specify both image and groundtruth files\n"
+            parser.exit(-1,err)
+
+    return args
+
+def main() :
+    args = parse_args() 
+
+    global segmentation_cmd
+    global segmentation_algorithm
+    if args["seg"]=="rast" : 
+        segmentation_cmd = "./rast-ocropus"
+        segmentation_algorithm = "rast"
+    elif args["seg"] == "voronoi" :
+        segmentation_cmd = "./voronoi-ocropus"
+        segmentation_algorithm = "vor"
+    else : 
+        raise Exception("Unknown segmentation algorithm "+args[seg] )
+        
+    if args["docid"] :
+        document_id = args["docid"]
+        run_image( document_id ) 
+
+    elif args["image"] : 
+        imgfilename = args["image"]
+        xmlfilename = args["gtruth"]
+
+        run_image_with_gtruth( imgfilename, xmlfilename ) 
+
+if __name__=='__main__':
+#    run_all_uwiii()
+    main()
+#    run_image( sys.argv[1] )
+#    sanity_check_images( sys.argv[1] )
+#    run_dir("{0}/*".format(num_rows))
+
+    
