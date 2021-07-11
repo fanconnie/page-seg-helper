@@ -12,4 +12,15 @@ import numpy as np
 import Image
 import os
 
-import mks
+import mkslices
+from basename import get_basename
+import rects
+import zonebox
+import zone2xml
+import gtruthxml
+
+num_rows_in_strip = 600
+num_rows_to_slide  = 20
+#output_dir = str(num_rows_in_strip)
+
+def 
