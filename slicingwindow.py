@@ -23,4 +23,9 @@ num_rows_in_strip = 600
 num_rows_to_slide  = 20
 #output_dir = str(num_rows_in_strip)
 
-def 
+def write_image( data, outfilename ) : 
+    img = Image.fromarray( data, mode="L" )
+    img.save( outfilename ) 
+
+def make_all_strips_images( data, basename, output_dir ) :
+    # carve up the numpy arr
