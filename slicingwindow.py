@@ -41,4 +41,10 @@ def make_all_strips_images( data, basename, output_dir ) :
     total_num_rows = data.shape[0] 
     while start_idx < total_num_rows : 
         # kill any previous reference to something in the strip_list
-   
+        s = None 
+
+        s = data[start_idx:end_idx,:] 
+        print "start={0} end={1} s={2}".format( start_idx, end_idx, s.shape )
+        strip_list.append( s ) 
+
+        outfilename = output_dir + "/
