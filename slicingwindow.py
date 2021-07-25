@@ -36,4 +36,9 @@ def make_all_strips_images( data, basename, output_dir ) :
 
     outfilename_fmt = "{0}_{1:03}_{2:03}_{3:04}.png"
 
-    print "mak
+    print "make_strips shape=",data.shape
+    strip_list = []
+    total_num_rows = data.shape[0] 
+    while start_idx < total_num_rows : 
+        # kill any previous reference to something in the strip_list
+   
