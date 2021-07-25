@@ -28,4 +28,12 @@ def write_image( data, outfilename ) :
     img.save( outfilename ) 
 
 def make_all_strips_images( data, basename, output_dir ) :
-    # carve up the numpy arr
+    # carve up the numpy array into N strips of num_rows each; return an array
+    # of said strips
+
+    start_idx = 0
+    end_idx = start_idx + num_rows_in_strip
+
+    outfilename_fmt = "{0}_{1:03}_{2:03}_{3:04}.png"
+
+    print "mak
