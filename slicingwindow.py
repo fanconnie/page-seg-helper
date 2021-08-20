@@ -47,4 +47,9 @@ def make_all_strips_images( data, basename, output_dir ) :
         print "start={0} end={1} s={2}".format( start_idx, end_idx, s.shape )
         strip_list.append( s ) 
 
-        outfilename = output_dir + "/
+        outfilename = output_dir + "/" + outfilename_fmt.format( 
+                basename, num_rows_in_strip, num_rows_to_slide, start_idx )
+        print outfilename
+        write_image( s, outfilename )
+                
+    
