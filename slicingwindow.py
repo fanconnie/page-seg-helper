@@ -59,4 +59,9 @@ def make_all_strips_images( data, basename, output_dir ) :
 
 def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) : 
 
-    to
+    total_num_rows,num_cols = data.shape
+
+    # starting strip as wide as the iamge with our base number of rows
+    s = rects.Strip(width=num_cols, height=num_rows_in_strip )
+
+    outfilename_fmt = "{0}_{1:03}_{2:
