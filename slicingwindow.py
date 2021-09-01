@@ -52,4 +52,11 @@ def make_all_strips_images( data, basename, output_dir ) :
         print outfilename
         write_image( s, outfilename )
                 
-    
+        start_idx += num_rows_to_slide
+        end_idx = min( total_num_rows, end_idx+num_rows_to_slide )
+
+    return strip_list
+
+def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) : 
+
+    to
