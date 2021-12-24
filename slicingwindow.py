@@ -72,4 +72,9 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
 
         # linear search all the boxes searching for those that match this strip
         box_intersect_list = []
-        for box_st
+        for box_strip in box_strip_list : 
+            isect = rects.strip_intersect( box_strip, s )
+            if not isect : 
+                continue
+
+#            print 'isect=',is
