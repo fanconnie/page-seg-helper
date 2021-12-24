@@ -64,4 +64,12 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
     # starting strip as wide as the iamge with our base number of rows
     s = rects.Strip(width=num_cols, height=num_rows_in_strip )
 
-    outfilename_fmt = "{0}_{1:03}_{2:
+    outfilename_fmt = "{0}_{1:03}_{2:03}_{3:04}.xml"
+
+    row = 0
+
+    while row < total_num_rows : 
+
+        # linear search all the boxes searching for those that match this strip
+        box_intersect_list = []
+        for box_st
