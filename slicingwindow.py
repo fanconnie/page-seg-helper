@@ -77,4 +77,8 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
             if not isect : 
                 continue
 
-#            print 'isect=',is
+#            print 'isect=',isect
+
+            # adjust the intersections so the new ground truth of the box
+            # intersections starts at row=0 (making new images out of
+            # strips so need ground truth 
