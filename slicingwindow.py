@@ -85,4 +85,10 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
             for rect in isect.rect : 
                 # subtract out the starting Y position of upper left
                 rect.y -= s.rect[0].y
-#            print "adjusted isect=",
+#            print "adjusted isect=",isect
+
+            # save this intersection; we'll write to a new XML file 
+            box_intersect_list.append( isect )
+
+        # save the intersections as XML
+        xmlfilename = 
