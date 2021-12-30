@@ -81,4 +81,8 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
 
             # adjust the intersections so the new ground truth of the box
             # intersections starts at row=0 (making new images out of
-            # strips so need ground truth 
+            # strips so need ground truth for each image strip)
+            for rect in isect.rect : 
+                # subtract out the starting Y position of upper left
+                rect.y -= s.rect[0].y
+#            print "adjusted isect=",
