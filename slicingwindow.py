@@ -98,4 +98,9 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
 #        print xmlfilename
 
         with open(xmlfilename,"w") as outfile :
-          
+            zone2xml.write_boxlist_to_xml( outfile, box_intersect_list )
+        print "wrote", xmlfilename
+
+
+        # slide the strip down by our window shift amount
+        s.rect[0].y += num_rows_to_sl
