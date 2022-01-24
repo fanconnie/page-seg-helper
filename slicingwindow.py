@@ -93,4 +93,9 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
         # save the intersections as XML
         xmlfilename = os.path.join(output_dir, outfilename_fmt.format( 
                 basename, num_rows_in_strip, num_rows_to_slide, row ) )
-#        xmlfilename = output_dir + "/" + ou
+#        xmlfilename = output_dir + "/" + outfilename_fmt.format( 
+#                basename, num_rows_in_strip, num_rows_to_slide, row )
+#        print xmlfilename
+
+        with open(xmlfilename,"w") as outfile :
+          
