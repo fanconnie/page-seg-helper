@@ -111,4 +111,10 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
         row += num_rows_to_slide
 
 def make_output_dir( basename ) : 
-    #
+    # output dir path is "stripsize/basename/"
+    # e.g., "300/A00BZONE"
+    
+#    global output_dir
+    
+    output_dir = os.path.join( str(num_rows_in_strip), basename )
+#    output_dir = "{0}/{1}/".form
