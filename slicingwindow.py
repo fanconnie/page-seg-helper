@@ -103,4 +103,12 @@ def make_all_gtruth_xml( box_strip_list, data, output_dir, basename) :
 
 
         # slide the strip down by our window shift amount
-        s.rect[0].y += num_rows_to_sl
+        s.rect[0].y += num_rows_to_slide
+        s.rect[1].y += num_rows_to_slide
+        s.rect[2].y += num_rows_to_slide
+        s.rect[3].y += num_rows_to_slide
+
+        row += num_rows_to_slide
+
+def make_output_dir( basename ) : 
+    #
