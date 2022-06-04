@@ -117,4 +117,14 @@ def make_output_dir( basename ) :
 #    global output_dir
     
     output_dir = os.path.join( str(num_rows_in_strip), basename )
-#    output_dir = "{0}/{1}/".form
+#    output_dir = "{0}/{1}/".format( num_rows_in_strip, basename )
+
+    if os.path.exists( output_dir ) :
+        return output_dir
+
+    os.mkdir( output_dir )
+
+    return output_dir
+
+def make_sliding_strips_from_box( boxfilename ) :
+    
