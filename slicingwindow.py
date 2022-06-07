@@ -127,4 +127,10 @@ def make_output_dir( basename ) :
     return output_dir
 
 def make_sliding_strips_from_box( boxfilename ) :
+    basename = get_basename( boxfilename )
+
+    # create the output directory for all the files I'm about to create
+    output_dir = make_output_dir(basename)
+#    return
     
+    b
