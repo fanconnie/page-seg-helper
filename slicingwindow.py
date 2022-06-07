@@ -133,4 +133,8 @@ def make_sliding_strips_from_box( boxfilename ) :
     output_dir = make_output_dir(basename)
 #    return
     
-    b
+    box_list = zonebox.load_boxes( boxfilename ) 
+
+    # load the image associated with this box list
+    # assume all the boxes have the same image name (they should)
+    imgfilename = "IMAGEBIN/{0}BIN.png".form
