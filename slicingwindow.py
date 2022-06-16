@@ -137,4 +137,9 @@ def make_sliding_strips_from_box( boxfilename ) :
 
     # load the image associated with this box list
     # assume all the boxes have the same image name (they should)
-    imgfilename = "IMAGEBIN/{0}BIN.png".form
+    imgfilename = "IMAGEBIN/{0}BIN.png".format( box_list[0].document_id )
+
+    # get the image as a numpy array
+    data = mkslices.load_image( imgfilename )
+
+    strip_list = make_all_strips_images( data, basename, output
