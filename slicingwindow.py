@@ -142,4 +142,11 @@ def make_sliding_strips_from_box( boxfilename ) :
     # get the image as a numpy array
     data = mkslices.load_image( imgfilename )
 
-    strip_list = make_all_strips_images( data, basename, output
+    strip_list = make_all_strips_images( data, basename, output_dir )
+
+    # 
+    # Now make the ground truth files for each strip
+    #
+    
+    # convert the box list into a list of strips
+    box_strip_list = [ rects.Strip(box=box) for box in box_list 
