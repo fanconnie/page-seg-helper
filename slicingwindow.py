@@ -149,4 +149,9 @@ def make_sliding_strips_from_box( boxfilename ) :
     #
     
     # convert the box list into a list of strips
-    box_strip_list = [ rects.Strip(box=box) for box in box_list 
+    box_strip_list = [ rects.Strip(box=box) for box in box_list ]
+
+    # slice up the ground truth into individual XML files 
+    make_all_gtruth_xml( box_strip_list, data, output_dir, basename ) 
+
+def make_sliding_strips_from_image( im
