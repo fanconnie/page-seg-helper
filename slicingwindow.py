@@ -164,4 +164,10 @@ def make_sliding_strips_from_image( imgfilename, output_dir ) :
 def awinder( ) : 
     # slice up Amy Winder's images 
     output_dir_base = "{0}_winder/".format(num_rows_in_strip)
-#  
+#    output_dir_base = "300_winder/"
+
+    for imgfilename in sys.argv[1:] :
+        basename = get_basename(imgfilename)
+
+        input_path = os.path.dirname(imgfilename)
+        # get
