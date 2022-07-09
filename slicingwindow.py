@@ -154,4 +154,9 @@ def make_sliding_strips_from_box( boxfilename ) :
     # slice up the ground truth into individual XML files 
     make_all_gtruth_xml( box_strip_list, data, output_dir, basename ) 
 
-def make_sliding_strips_from_image( im
+def make_sliding_strips_from_image( imgfilename, output_dir ) : 
+    basename = get_basename( imgfilename ) 
+
+    # get the image as a numpy array
+    data = mkslices.load_image( imgfilename )
+    strip_l
