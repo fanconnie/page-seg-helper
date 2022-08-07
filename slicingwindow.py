@@ -170,4 +170,8 @@ def awinder( ) :
         basename = get_basename(imgfilename)
 
         input_path = os.path.dirname(imgfilename)
-        # get
+        # get rid of the trailing "/png" component (it's annoying)
+        input_path = input_path.replace( "/png", "/" )
+
+        output_dir = output_dir_base + input_path + basename
+        prin
