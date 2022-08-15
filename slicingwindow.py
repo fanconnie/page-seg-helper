@@ -174,4 +174,12 @@ def awinder( ) :
         input_path = input_path.replace( "/png", "/" )
 
         output_dir = output_dir_base + input_path + basename
-        prin
+        print output_dir
+
+        if os.path.exists(output_dir) : 
+            print "{0} exists so assume files are OK".format(output_dir)
+            continue
+        else:
+            os.makedirs(output_dir)
+
+   
