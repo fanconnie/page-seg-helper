@@ -182,4 +182,8 @@ def awinder( ) :
         else:
             os.makedirs(output_dir)
 
-   
+        make_sliding_strips_from_image( imgfilename, output_dir )
+
+        xmlfilename = imgfilename.replace(".png",".xml")
+        xmlfilename = xmlfilename.replace("png","gTruth")
+        p
