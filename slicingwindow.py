@@ -186,4 +186,10 @@ def awinder( ) :
 
         xmlfilename = imgfilename.replace(".png",".xml")
         xmlfilename = xmlfilename.replace("png","gTruth")
-        p
+        print xmlfilename
+
+        try : 
+            zone_list = gtruthxml.parse_xml( xmlfilename )
+        except IOError,e:
+            if e.errno==2 :
+                # some of the files are living in a ./
