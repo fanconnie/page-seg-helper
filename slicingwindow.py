@@ -192,4 +192,7 @@ def awinder( ) :
             zone_list = gtruthxml.parse_xml( xmlfilename )
         except IOError,e:
             if e.errno==2 :
-                # some of the files are living in a ./
+                # some of the files are living in a ./xml subdir
+                xmlfilename = imgfilename.replace(".png",".xml")
+                xmlfilename = xmlfilename.replace("png","gTruth/xml")
+                zone_list = gtruthxml.parse_xml( xmlfilename )
