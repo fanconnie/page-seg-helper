@@ -196,3 +196,12 @@ def awinder( ) :
                 xmlfilename = imgfilename.replace(".png",".xml")
                 xmlfilename = xmlfilename.replace("png","gTruth/xml")
                 zone_list = gtruthxml.parse_xml( xmlfilename )
+            else :
+                raise
+
+        print zone_list
+
+        # get the image as a numpy array
+        data = mkslices.load_image( imgfilename )
+
+        # slice up the ground tr
