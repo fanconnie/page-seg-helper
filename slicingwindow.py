@@ -204,4 +204,9 @@ def awinder( ) :
         # get the image as a numpy array
         data = mkslices.load_image( imgfilename )
 
-        # slice up the ground tr
+        # slice up the ground truth into individual XML files 
+        make_all_gtruth_xml( zone_list, data, output_dir, basename ) 
+
+def main() : 
+    for boxfilename in sys.argv[1:] :
+        make_sliding_strips_from_box( box
