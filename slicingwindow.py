@@ -209,4 +209,9 @@ def awinder( ) :
 
 def main() : 
     for boxfilename in sys.argv[1:] :
-        make_sliding_strips_from_box( box
+        make_sliding_strips_from_box( boxfilename )
+
+if __name__=='__main__': 
+    main()
+#    awinder()
+
