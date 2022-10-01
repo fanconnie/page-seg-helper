@@ -45,3 +45,34 @@ def print_zone_classification( outfile, zonebox ) :
     print >>outfile, "<Classification>"
     # nothing in the zonebox indicates text/graphics so mark everything as text
     # for now
+    print >>outfile, "<Category Value=\"Text\">"
+    print >>outfile, "</Category>"
+    print >>outfile, "</Classification>"
+
+def print_zone( outfile, zonebox ) : 
+    print >>outfile, "<Zone>"
+    print_zone_corners( outfile, zonebox ) 
+    print_zone_classification( outfile, zonebox )
+    print >>outfile, "</Zone>"
+
+def write_boxlist_to_xml( outfile, box_list ) : 
+    print >>outfile, "<Page>"
+    for box in box_list : 
+        print_zone( outfile, box ) 
+    print >>outfile, "</Page>"
+    
+
+def convert_zonebox_to_xml( outfile, boxfilename) : 
+
+    box_list = zonebox.load_boxes(boxfilename)
+
+    write_boxlist_to_xml( outfile, box_list )
+
+def main() : 
+    boxfilename = sys.argv[1]
+
+    convert_zonebox_to_xml( sys.stdout, boxfilename ) 
+    
+    
+if __name__=='__main__' : 
+    main()
